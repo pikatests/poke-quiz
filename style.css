@@ -1,0 +1,185 @@
+@font-face {
+    font-family: 'Pokemon Classic';
+    src: url('./assets/Pokemon-Font.ttf');
+}
+
+body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: #DFE2EF;
+    overflow-y: hidden;
+    font-family: 'Pokemon Classic';
+}
+.gameboy {
+    position: absolute;
+    top: 20vmin;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90vmin;
+    height: auto;
+}
+
+/* Image Fade-In */
+
+.fade-in {
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Quiz */
+
+.quiz-body {
+    position: absolute;
+    background-color: #FFFFFF;
+    top: 39.5vmin;
+    height: 45vmin;
+    width: 49vmin;
+    border-radius: 10px;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    right: 0;
+}
+
+#quiz-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.quiz-image {
+    position: relative;
+    height: 20vmin;
+    align-self: center;
+    top: 20%;
+}
+
+.text-box {
+    width: 98%;
+}
+
+#questions-container {
+    width: 94.5%;
+}
+
+.text-box,
+#questions-container,
+.custom-options {
+    position: absolute;
+    height: 14vmin;
+    align-self: start;
+    bottom: 0;
+    margin-left: 0.5vmin;
+    margin-bottom: 1vmin;
+    box-shadow: 
+        /* top */
+        inset 0 5px black,
+        inset 0 7px white,
+        inset 0 13px black,
+        /* bottom */
+        inset 0 -5px black,
+        inset 0 -7px white,
+        inset 0 -13px black,
+        /* sides */
+        inset 4px 0 black,
+        inset 8px 0 white,
+        inset 12px 0 black,
+        inset -4px 0 black,
+        inset -8px 0 white,
+        inset -12px 0 black;
+}
+
+#dialogue-text {
+    cursor: pointer;
+    outline: none;
+
+    position: relative;
+    margin-top: -0.5px;
+    font-size: 2.5vmin;
+    padding-left: 2vmin;
+    padding-top: 0.5vmin;
+}
+
+.question-text {
+    position: relative;
+    margin-top: -0.5px;
+    font-size: 2.5vmin;
+    padding-left: 2vmin;
+}
+
+/* question answer options */
+
+.custom-options {
+    display: flex;
+    background-color: #FFFFFF;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 89%;
+    margin-left: -2vmin;
+    margin-bottom: 15vmin;
+    height: 23vmin;
+    padding-left: 5vmin;
+}
+
+.custom-option {
+    cursor: pointer;
+    padding-top: 0.2vmin;
+}
+
+.custom-option:hover::after,
+.custom-option:focus::after,
+.custom-option.selected::after {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    font-size: 2.5vmin;
+    padding-left: 1.5vmin;
+}
+
+/* Pokémon Result */
+.quiz-result {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+#final-message {
+    font-size: 2.5vmin;
+    padding-left: 2vmin;
+}
+
+.pokemon-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#pokemon-name {
+    position: absolute;
+    top: 5%;
+    left: 30%;
+    font-size: 2vmin;
+}
+
+#pokemon-image {
+    height: 20vmin;
+    width: auto;
+    margin-top: 6vmin;
+}
+
+#pokemon-name,
+#pokemon-image {
+    animation: fadeIn 5s;
+}

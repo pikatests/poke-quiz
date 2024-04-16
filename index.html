@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Pokémon Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="gameboy-container">
+        <img src="./assets/gameboy.svg" alt="Gameboy" class="gameboy">
+        <div id="quiz-container" class="quiz-body">
+            <img src="./assets/oak.png" alt="Professor Oak" class="quiz-image oak fade-in fade-out">
+            <div id="dialogue-container" class="text-box final-message" tabindex="0">
+                <p id="dialogue-text"></p>
+            </div>
+            <form id="quiz-form" class="fade-out" style="display: none;">
+                <div id="questions-container" class="question-text fade-out">
+                    <!-- Questions go here -->
+                </div>
+            </form>
+            <div id="pokemon-result" class="quiz-result" style="display: none;">
+                <div class="text-box">
+                <p id="final-message">Your ideal Pokémon is... </p>
+            </div>
+            <div class="pokemon-display">
+                <p><strong id="pokemon-name"></strong></p>
+                <img id="pokemon-image" src="" alt="" />
+            </div>
+            </div>
+        </div>
+
+        <script type="module" src="script.js"></script>
+</body>
+
+</html>
