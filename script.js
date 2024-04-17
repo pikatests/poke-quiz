@@ -210,10 +210,9 @@ document.addEventListener('DOMContentLoaded', function() {
         pokemonImage.src = pokemon.img;
         pokemonImage.alt = pokemon.name;
     
-        setTimeout(() => {
-            pokemonResultDiv.style.display = 'block';
-            pokemonResultDiv.classList.add('fade-in');
-        }, 1000); 
+        pokemonResultDiv.style.display = 'block';
+        pokemonResultDiv.classList.add('fade-in');
+        
     }
     
     advanceDialogue();
