@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const buttonUp = document.getElementById('button-up');
     const buttonDown = document.getElementById('button-down');
     const buttonA = document.getElementById('button-a');
+    var quizCompleted = false;
 
     if (buttonUp && buttonDown && buttonA) {
         buttonUp.addEventListener('click', () => navigateOptions('up'));
@@ -167,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && !quizCompleted) {
             event.preventDefault(); 
             const selectedOption = document.querySelector('.custom-option.selected');
             if (selectedOption) {
@@ -179,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleButtonA() {
         if (dialogueContainer.style.display !== 'none') {
             advanceDialogue();
-        } else {
+        } else if(!quizCompleted) {
             const selectedOption = document.querySelector('.custom-option.selected');
             if (selectedOption) {
                 selectedOption.click();
@@ -199,6 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
         messageElement.innerHTML = "Your ideal Pokémon partner is...";
     
         showPokemonResult(bestMatch);
+        quizCompleted = true;
     }
     
     function showPokemonResult(pokemon) {
@@ -212,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         pokemonResultDiv.style.display = 'block';
         pokemonResultDiv.classList.add('fade-in');
-        
+
     }
     
     advanceDialogue();
