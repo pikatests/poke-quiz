@@ -72,6 +72,13 @@ body {
     width: 94.5%;
 }
 
+#question-counter {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 .text-box,
 #questions-container,
 .custom-options {
@@ -146,6 +153,10 @@ body {
     padding-left: 1.5vmin;
 }
 
+.custom-option:active {
+    opacity: 0.5;
+}
+
 /* Pokémon Result */
 .quiz-result {
     display: flex;
@@ -169,7 +180,7 @@ body {
 #pokemon-name {
     position: absolute;
     top: 5%;
-    left: 30%;
+    left: 35%;
     font-size: 2vmin;
 }
 
@@ -182,4 +193,68 @@ body {
 #pokemon-name,
 #pokemon-image {
     animation: fadeIn 5s;
+}
+
+/* small screen adjustments */
+
+@media only screen and (max-width: 600px) {
+.text-box,
+#questions-container,
+.custom-options {
+    position: absolute;
+    height: 14vmin;
+    align-self: start;
+    bottom: 0;
+    margin-left: 0.5vmin;
+    margin-bottom: 1vmin;
+    z-index: 1;
+    box-shadow: 
+        /* top */
+        inset 0 5px black,
+        inset 0 7px white,
+        /* bottom */
+        inset 0 -5px black,
+        /* sides */
+        inset 4px 0 black,
+        inset -4px 0 black
+}
+.custom-options {
+    display: flex;
+    background-color: #FFFFFF;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 89%;
+    margin-left: -2vmin;
+    margin-bottom: 15vmin;
+    height: 23vmin;
+    padding-left: 5vmin;
+}
+.pokemon-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#pokemon-name {
+    position: absolute;
+    top: 5%;
+    left: 35%;
+    font-size: 2vmin;
+}
+
+#pokemon-image {
+    height: 20vmin;
+    width: auto;
+    margin-top: 3vmin;
+    z-index: 0;
+}
+
+#question-counter {
+    position: absolute;
+    top: -0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2vmin;
 }
