@@ -174,13 +174,14 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
 }
 
 #pokemon-name {
-    position: absolute;
-    top: 5%;
-    left: 35%;
+    position:absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    top: 0;
     font-size: 2vmin;
 }
 
@@ -239,15 +240,17 @@ body {
 
 #pokemon-name {
     position: absolute;
-    top: 5%;
-    left: 35%;
+    top: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
     font-size: 2vmin;
 }
 
 #pokemon-image {
-    height: 20vmin;
+    height: 16vmin;
     width: auto;
-    margin-top: 3vmin;
+    margin-top: 8vmin;
     z-index: 0;
 }
 
