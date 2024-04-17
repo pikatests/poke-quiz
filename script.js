@@ -2,6 +2,19 @@ import { calculateUserScores, findBestMatch } from './logic.js';
 import questions from './questions.js';
 
 document.addEventListener('DOMContentLoaded', function() {
+    
+    const buttonUp = document.getElementById('button-up');
+    const buttonDown = document.getElementById('button-down');
+    const buttonA = document.getElementById('button-a');
+
+    if (buttonUp && buttonDown && buttonA) {
+        buttonUp.addEventListener('click', () => navigateOptions('up'));
+        buttonDown.addEventListener('click', () => navigateOptions('down'));
+        buttonA.addEventListener('click', handleButtonA);
+    } else {
+        console.error('SVG buttons not found');
+    }
+
     const dialogueText = [
         "Hello there! Welcome to the world of POKÉMON!",
         "My name is Oak. People call me the POKÉMON PROF!",
@@ -12,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const quizForm = document.getElementById('quiz-form');
     const questionsContainer = document.getElementById('questions-container');
-    const resultsContainer = document.getElementById('result');
     const dialogueContainer = document.getElementById('dialogue-container');
     const dialogueP = document.getElementById('dialogue-text');
     let dialogueIndex = 0;
@@ -54,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadQuestion(index) {
         const totalQuestions = 36;
         const questionCounter = document.getElementById('question-counter');
-        questionCounter.textContent = `Question ${index + 1}/${totalQuestions}`;
+        questionCounter.textContent = `Q: ${index + 1}/${totalQuestions}`;
         
         questionsContainer.innerHTML = ''; 
     
@@ -80,50 +92,99 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function setupCustomSelect(options, questionIndex) {
-        let selectedOptionIndex = 0; 
+        let selectedOptionIndex = -1; // Start with no selection
         const allOptions = options.querySelectorAll('.custom-option');
-  
+      
         function updateSelectedOption() {
-            allOptions.forEach((opt, idx) => {
-                opt.classList.remove('selected');
-                opt.setAttribute('tabindex', '-1'); 
-            });
-            allOptions[selectedOptionIndex].classList.add('selected');
-            allOptions[selectedOptionIndex].setAttribute('tabindex', '0'); 
-            allOptions[selectedOptionIndex].focus(); 
+            if (selectedOptionIndex >= 0) {
+                allOptions.forEach(opt => opt.classList.remove('selected'));
+                allOptions[selectedOptionIndex].classList.add('selected');
+                allOptions[selectedOptionIndex].focus(); // Focus the selected option
+            }
         }
     
-        updateSelectedOption(); 
-    
-        options.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-                selectedOptionIndex = (selectedOptionIndex + 1) % allOptions.length;
-                updateSelectedOption();
-                e.preventDefault(); 
-            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-                selectedOptionIndex = (selectedOptionIndex - 1 + allOptions.length) % allOptions.length;
-                updateSelectedOption();
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
                 e.preventDefault();
-            } else if (e.key === 'Enter' || e.key === ' ') { 
-                allOptions[selectedOptionIndex].click(); 
+                if (allOptions.length > 0) {
+                    const move = (e.key === 'ArrowDown') ? 1 : -1;
+                    selectedOptionIndex = (selectedOptionIndex + move + allOptions.length) % allOptions.length;
+                    updateSelectedOption();
+                }
             }
         });
     
-        allOptions.forEach(option => {
+        allOptions.forEach((option, idx) => {
             option.addEventListener('click', () => {
-                allOptions.forEach(opt => opt.classList.remove('selected'));
-                option.classList.add('selected');
-                responses.push(parseInt(option.getAttribute('data-value'))); 
-                console.log('Current responses:', responses); 
-    
-                if (questionIndex === questions.length - 1) {
-                    // Last question answered
-                    setTimeout(() => calculateAndDisplayResults(responses), 2000); 
-                } else {
-                    loadQuestion(questionIndex + 1);
-                }
+                selectedOptionIndex = idx;
+                updateSelectedOption(allOptions, selectedOptionIndex);
+                proceedAfterSelection(idx, questionIndex);
             });
         });
+
+        function proceedAfterSelection(selectedIndex, questionIndex) {
+            responses[questionIndex] = parseInt(allOptions[selectedIndex].getAttribute('data-value'));
+            console.log('Current responses:', responses);
+        
+            if (questionIndex === questions.length - 1) {
+                setTimeout(() => calculateAndDisplayResults(responses), 2000);
+            } else {
+                loadQuestion(questionIndex + 1);
+            }
+        }
+    }
+
+    function navigateOptions(direction) {
+        const allOptions = document.querySelectorAll('.custom-option');
+        let currentIndex = Array.from(allOptions).findIndex(opt => opt.classList.contains('selected'));
+    
+        if (direction === 'up') {
+            currentIndex = currentIndex > 0 ? currentIndex - 1 : allOptions.length - 1;
+        } else if (direction === 'down') {
+            currentIndex = currentIndex < allOptions.length - 1 ? currentIndex + 1 : 0;
+        }
+    
+        allOptions.forEach(opt => opt.classList.remove('selected'));
+        allOptions[currentIndex].classList.add('selected'); 
+        allOptions[currentIndex].focus();
+    }
+    
+    function selectOption() {
+        const selectedOption = document.querySelector('.custom-option.selected');
+        if (selectedOption) {
+            selectedOption.click(); 
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttonUp = document.getElementById('button-up');
+        const buttonDown = document.getElementById('button-down');
+        const buttonA = document.getElementById('button-a');
+    
+        buttonUp.addEventListener('click', () => navigateOptions('up'));
+        buttonDown.addEventListener('click', () => navigateOptions('down'));
+        buttonA.addEventListener('click', selectOption);
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); 
+            const selectedOption = document.querySelector('.custom-option.selected');
+            if (selectedOption) {
+                selectedOption.click();
+            }
+        }
+    });
+
+    function handleButtonA() {
+        if (dialogueContainer.style.display !== 'none') {
+            advanceDialogue();
+        } else {
+            const selectedOption = document.querySelector('.custom-option.selected');
+            if (selectedOption) {
+                selectedOption.click();
+            }
+        }
     }
 
     function calculateAndDisplayResults(responses) {
@@ -149,7 +210,6 @@ document.addEventListener('DOMContentLoaded', function() {
         pokemonImage.src = pokemon.img;
         pokemonImage.alt = pokemon.name;
     
-        // Fade in the Pokémon result
         setTimeout(() => {
             pokemonResultDiv.style.display = 'block';
             pokemonResultDiv.classList.add('fade-in');
