@@ -37,14 +37,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function advanceDialogue() {
         if (textPosition < currentDialoguePart.length) {
-            // If typing is not finished, show the full line immediately
             dialogueP.textContent = currentDialoguePart;
             textPosition = currentDialoguePart.length;
         } else if (dialogueIndex < dialogueText.length) {
             currentDialoguePart = dialogueText[dialogueIndex++];
             textPosition = 0;
-            dialogueP.textContent = ''; // Clear previous text
-            typeWriter(); // Start typing new dialogue part
+            dialogueP.textContent = '';
+            typeWriter(); 
         } else {
             dialogueContainer.style.display = 'none';
             quizForm.style.display = 'block';
@@ -53,7 +52,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadQuestion(index) {
-        questionsContainer.innerHTML = ''; // Clear previous question
+        const totalQuestions = 36;
+        const questionCounter = document.getElementById('question-counter');
+        questionCounter.textContent = `Question ${index + 1}/${totalQuestions}`;
+        
+        questionsContainer.innerHTML = ''; 
     
         if (index < questions.length) {
             const question = questions[index];
@@ -77,33 +80,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function setupCustomSelect(options, questionIndex) {
-        let selectedOptionIndex = 0; // Start with the first option selected
+        let selectedOptionIndex = 0; 
         const allOptions = options.querySelectorAll('.custom-option');
-    
-        // Function to update visual selection
+  
         function updateSelectedOption() {
             allOptions.forEach((opt, idx) => {
                 opt.classList.remove('selected');
-                opt.setAttribute('tabindex', '-1'); // Make all options not focusable except the selected one
+                opt.setAttribute('tabindex', '-1'); 
             });
             allOptions[selectedOptionIndex].classList.add('selected');
-            allOptions[selectedOptionIndex].setAttribute('tabindex', '0'); // Make the selected option focusable
-            allOptions[selectedOptionIndex].focus(); // Focus the selected option
+            allOptions[selectedOptionIndex].setAttribute('tabindex', '0'); 
+            allOptions[selectedOptionIndex].focus(); 
         }
     
-        updateSelectedOption(); // Update initially
+        updateSelectedOption(); 
     
         options.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
                 selectedOptionIndex = (selectedOptionIndex + 1) % allOptions.length;
                 updateSelectedOption();
-                e.preventDefault(); // Prevent default arrow key behavior
+                e.preventDefault(); 
             } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
                 selectedOptionIndex = (selectedOptionIndex - 1 + allOptions.length) % allOptions.length;
                 updateSelectedOption();
                 e.preventDefault();
-            } else if (e.key === 'Enter' || e.key === ' ') { // Select option with Enter or Space
-                allOptions[selectedOptionIndex].click(); // Trigger the click event
+            } else if (e.key === 'Enter' || e.key === ' ') { 
+                allOptions[selectedOptionIndex].click(); 
             }
         });
     
@@ -111,12 +113,12 @@ document.addEventListener('DOMContentLoaded', function() {
             option.addEventListener('click', () => {
                 allOptions.forEach(opt => opt.classList.remove('selected'));
                 option.classList.add('selected');
-                responses.push(parseInt(option.getAttribute('data-value'))); // Store response
-                console.log('Current responses:', responses); // Optional: log responses for debugging
+                responses.push(parseInt(option.getAttribute('data-value'))); 
+                console.log('Current responses:', responses); 
     
                 if (questionIndex === questions.length - 1) {
                     // Last question answered
-                    setTimeout(() => calculateAndDisplayResults(responses), 2000); // Delay results display
+                    setTimeout(() => calculateAndDisplayResults(responses), 2000); 
                 } else {
                     loadQuestion(questionIndex + 1);
                 }
@@ -128,16 +130,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const userScores = calculateUserScores(responses);
         const bestMatch = findBestMatch(userScores);
     
-        // Clear any previous content and hide fade-out elements
         for (const element of document.getElementsByClassName('fade-out')) {
             element.style.display = 'none';
         }
-    
-        // Directly set the final message without a typewriter effect
+
         const messageElement = document.getElementById('final-message');
-        messageElement.innerHTML = "Your ideal Pokémon partner is..."; // Set text directly
+        messageElement.innerHTML = "Your ideal Pokémon partner is...";
     
-        // Immediately display Pokémon result
         showPokemonResult(bestMatch);
     }
     

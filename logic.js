@@ -23,7 +23,7 @@ function calculateUserScores(responses) {
         console.log(`Processing response ${index}:`, response, questions[index]);
         if (!questions[index]) {
             console.error("No question data available at index:", index);
-            return; // Skip this iteration
+            return;
         }
         const questionTrait = questions[index].trait;
         let increment = response;
@@ -49,12 +49,12 @@ function findBestMatch(userScores) {
     let topMatches = [];
     let highestScore = -Infinity;
 
-    // First, find the highest score to establish a benchmark
+    // find the highest score to establish a benchmark
     pokemon.forEach(p => {
         let compatibilityScore = 0;
         p.traits.forEach(trait => {
             let score = userScores[trait.name] || 0;
-            if (!trait.positive) score = 6 - score;  // Adjust for traits scored in reverse
+            if (!trait.positive) score = 6 - score;  // Adjust for traits in reverse
             compatibilityScore += score * trait.weight;
         });
 
@@ -67,7 +67,7 @@ function findBestMatch(userScores) {
         }
     });
 
-    // Select randomly from the top matches
+    // Select random from the top matches
     if (topMatches.length > 1) {
         return topMatches[Math.floor(Math.random() * topMatches.length)];
     } else {
