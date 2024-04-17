@@ -207,13 +207,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const pokemonName = document.getElementById('pokemon-name');
         const pokemonImage = document.getElementById('pokemon-image');
         const pokemonResultDiv = document.getElementById('pokemon-result');
+        const shareButton = document.getElementById('share-button');
     
         pokemonName.textContent = pokemon.name;
         pokemonImage.src = pokemon.img;
         pokemonImage.alt = pokemon.name;
+
+        const tweetText = encodeURIComponent(`My perfect Pokémon match is ${pokemonName.textContent}! Check out which Pokémon is yours!`);
+        const url = encodeURIComponent(window.location.href);
+        shareButton.href = `https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`;
     
         pokemonResultDiv.style.display = 'block';
         pokemonResultDiv.classList.add('fade-in');
+        shareButton.style.display = 'block';
+
+        shareButton.onclick = function() {
+            window.open(shareButton.href, '_blank');
+        };
 
     }
     

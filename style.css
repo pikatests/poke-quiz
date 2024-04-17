@@ -196,6 +196,31 @@ body {
     animation: fadeIn 5s;
 }
 
+/* Credits and Share */
+
+#credits-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1vmin;
+    text-align: center;
+}
+
+#share-button {
+    border: none;
+    text-decoration: underline;
+    font-family: 'Pokemon Classic';
+    background: none;
+    color: #272f95;
+    cursor: pointer;
+    width: 100%;
+}
+
 /* small screen adjustments */
 
 @media only screen and (max-width: 600px) {
