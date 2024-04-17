@@ -92,14 +92,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function setupCustomSelect(options, questionIndex) {
-        let selectedOptionIndex = -1; // Start with no selection
+        let selectedOptionIndex = -1; 
         const allOptions = options.querySelectorAll('.custom-option');
       
         function updateSelectedOption() {
             if (selectedOptionIndex >= 0) {
                 allOptions.forEach(opt => opt.classList.remove('selected'));
                 allOptions[selectedOptionIndex].classList.add('selected');
-                allOptions[selectedOptionIndex].focus(); // Focus the selected option
+                allOptions[selectedOptionIndex].focus(); 
             }
         }
     
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Current responses:', responses);
         
             if (questionIndex === questions.length - 1) {
-                setTimeout(() => calculateAndDisplayResults(responses), 2000);
+                calculateAndDisplayResults(responses);
             } else {
                 loadQuestion(questionIndex + 1);
             }
