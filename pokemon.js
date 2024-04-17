@@ -2947,8 +2947,8 @@ const pokemon = [
                 positive: true,
             },
             {
-                name: "Emotionality",
-                weight: 0.45,
+                name: "Agreeableness",
+                weight: 0.25,
                 positive: true,
 
             }
