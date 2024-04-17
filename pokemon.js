@@ -2943,12 +2943,12 @@ const pokemon = [
         traits: [
             {
                 name: "Openness to Experience",
-                weight: 0.85,
+                weight: 0.55,
                 positive: true,
             },
             {
                 name: "Emotionality",
-                weight: 0.15,
+                weight: 0.45,
                 positive: true,
 
             }
