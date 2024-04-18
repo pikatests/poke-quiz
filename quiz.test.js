@@ -1,5 +1,4 @@
-import { calculateUserScores, findBestMatch } from './logic.js';
-import pokemon from './pokemon.js';
+import { findBestMatch } from './logic.js';
 
 // Define some test cases
 const testCases = [
