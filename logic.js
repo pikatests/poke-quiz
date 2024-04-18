@@ -45,34 +45,45 @@ function calculateUserScores(responses) {
     return scores;
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        // Generate a random index from 0 to i
+        const j = Math.floor(Math.random() * (i + 1));
+        
+        // Swap elements at indices i and j
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 function findBestMatch(userScores) {
     let topMatches = [];
     let highestScore = -Infinity;
+    const scoreThreshold = 0.3;  
 
-    // find the highest score to establish a benchmark
     pokemon.forEach(p => {
         let compatibilityScore = 0;
         p.traits.forEach(trait => {
             let score = userScores[trait.name] || 0;
-            if (!trait.positive) score = 6 - score;  // Adjust for traits in reverse
+            if (!trait.positive) score = 6 - score;
             compatibilityScore += score * trait.weight;
         });
 
-        // Update highest score and reset top matches if new highest score found
         if (compatibilityScore > highestScore) {
             highestScore = compatibilityScore;
             topMatches = [p];
-        } else if (compatibilityScore >= highestScore - 10) {  // Consider matches within a range of the top score
+        } else if (compatibilityScore >= highestScore - scoreThreshold) {
             topMatches.push(p);
         }
     });
 
-    // Select random from the top matches
-    if (topMatches.length > 1) {
-        return topMatches[Math.floor(Math.random() * topMatches.length)];
-    } else {
-        return topMatches[0]; // Return the only top match or the highest if only one was found
+    // Ensure diversity in selection if possible
+    if (topMatches.length > 10) {
+        // If more than 10 matches, narrow down randomly to 10
+        shuffleArray(topMatches); 
+        topMatches = topMatches.slice(0, 10);
     }
+
+    return topMatches[Math.floor(Math.random() * topMatches.length)];
 }
 
 export { calculateUserScores, findBestMatch };
